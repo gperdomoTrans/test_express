@@ -1,16 +1,17 @@
-kind: Deployment_test_express
+
 apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: test_express
+  name: test-express
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nodejs-app
+      app: test-express
   template:
     metadata:
       labels:
-        app: test_express
+        app: test-express
     spec:
       containers:
         - name: test_express
@@ -24,8 +25,8 @@ spec:
               memory: "50Mi"
               cpu: "10m"
 ---
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
   name: test-express-svc
 spec:
@@ -35,4 +36,4 @@ spec:
       protocol: TCP
       targetPort: 3000
   selector:
-    app: test_express
+    app: test-express
