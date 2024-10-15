@@ -1,0 +1,38 @@
+kind: Deployment_test_express
+apiVersion: apps/v1
+metadata:
+  name: test_express
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodejs-app
+  template:
+    metadata:
+      labels:
+        app: test_express
+    spec:
+      containers:
+        - name: test_express
+          image: test_express:v1
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          resources:
+            requests:
+              memory: "50Mi"
+              cpu: "10m"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: test-express-svc
+spec:
+  ports:
+    - name: http-3000
+      port: 3000
+      protocol: TCP
+      targetPort: 3000
+  selector:
+    app: test_express
